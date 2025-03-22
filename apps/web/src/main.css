@@ -1,0 +1,43 @@
+:root {
+    font-family: system-ui, Avenir, Helvetica, sans-serif ;
+    font-weight: 400;
+    background-color: #f3f4f5;
+    color: rgba(15, 15, 15, 0.87);
+}
+
+body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+}
+
+h1 {
+    color: #0079c1;
+    font-size: 2.5em;
+    line-height: 1.2;
+}
+
+
+button {
+    border-radius: 8px;
+    border: 2px solid transparent;
+    padding: 0.6em 1.2em;
+    font-size: 1em;
+    font-weight: 500;
+    font-family: inherit;
+    background-color: #0079c1;
+    cursor: pointer;
+    transition: border-color 0.25s;
+    margin-right: 5px;
+    color: #ffffff;
+  }
+
+  button:hover {
+    border-color: rgba(15, 15, 15, 0.87);
+    color: rgba(15, 15, 15, 0.87);
+  }
+
+  button:focus, button:focus-visible {
+    outline: 4px auto;
+  }
