@@ -74,8 +74,8 @@
     font-family: monospace;
     padding: 15px;
     border-radius: 5px;
-    height: 300px;
-    width: 95%;
+    height: 240px;
+    width: 96%;
     display: flex;
     flex-direction: column;
   }

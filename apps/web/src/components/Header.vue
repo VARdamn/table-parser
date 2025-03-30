@@ -12,19 +12,15 @@ export default {
 
 <style scoped>
 .header {
-  flex: 1;
+  height: 40px;
   padding: 15px;
   box-shadow: 0px 0px 26px 8px rgba(156, 156, 156, 0.26);
   display: flex;
   align-items: center;
+  flex-shrink: 0;
 }
 
 .header img {
-  margin-right: 20px ;
+  margin-right: 20px;
 }
-
-.header p {
-  margin: 0;
-}
-
 </style>
