@@ -39,3 +39,16 @@ button {
   button:focus, button:focus-visible {
     outline: 4px auto;
   }
+ 
+  .save {
+    background-color: #00a94f;
+  }
+
+  .save:disabled, .saved:disabled:hover {
+    background-color: #cccccc;
+    cursor: not-allowed;
+  }
+
+  .cancel {
+    background-color: #bdbdbd;
+  }

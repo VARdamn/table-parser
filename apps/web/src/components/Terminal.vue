@@ -32,12 +32,11 @@
       processCommand(command) {
         switch (command.trim()) {
           case 'help':
-            return 'Доступные команды: help, clear.';
+            return 'Доступные команды: help, clear';
           case 'clear':
             this.output = [];
             return '';
           default:
-            console.log(command);
             return `Команда не распознана: "${command}"`;
         }
       },
