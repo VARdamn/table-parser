@@ -1,11 +1,19 @@
 {
-  "name": "project",
-  "version": "1.0.0",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "",
-  "license": "ISC",
-  "description": ""
+	"name": "project",
+	"version": "1.0.0",
+	"main": "index.js",
+	"scripts": {
+		"dev-db": "docker compose up -d db",
+		"dev": "npm run dev-db && turbo run dev"
+	},
+	"packageManager": "npm@10.9.0",
+	"author": "",
+	"license": "ISC",
+	"description": "",
+	"devDependencies": {
+		"turbo": "^2.5.0"
+	},
+	"workspaces": [
+		"apps/*"
+	]
 }
