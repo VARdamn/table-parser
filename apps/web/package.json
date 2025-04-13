@@ -9,7 +9,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@types/highlight.js": "^9.12.4",
+    "highlight.js": "^11.11.1",
     "jquery.terminal": "^2.44.1",
+    "pgsql-ast-parser": "^12.0.1",
     "vue": "^3.5.13",
     "vue-router": "^4.5.0"
   },
