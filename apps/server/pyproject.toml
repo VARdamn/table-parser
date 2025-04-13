@@ -1,0 +1,13 @@
+[project]
+name = "server"
+version = "0.1.0"
+description = "FastAPI backend"
+readme = "README.md"
+requires-python = ">=3.10"
+
+dependencies = [
+    "fastapi[standard]",
+    "uvicorn[standard]",
+    "python-dotenv",
+    "asyncpg",
+]
