@@ -27,12 +27,10 @@
           <button class="close-btn" @click="close">×</button>
         </header>
   
-        <!-- Основное содержимое -->
         <div class="modal-body">
           <slot></slot>
         </div>
-  
-        <!-- Футер (опциональный) -->
+
         <footer v-if="$slots.footer" class="modal-footer">
           <slot name="footer"></slot>
         </footer>
