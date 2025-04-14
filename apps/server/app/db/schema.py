@@ -33,10 +33,6 @@ CREATE TABLE specializations (
     file_hash VARCHAR(64) UNIQUE
 );'''
 
-# 
-# 3 Петров А.И.
-# 4 Петров А.И
-
 '''CREATE TABLE report_entries (
     id SERIAL PRIMARY KEY,
     report_id INTEGER NOT NULL REFERENCES reports(id) ON DELETE CASCADE,
@@ -47,6 +43,26 @@ CREATE TABLE specializations (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     UNIQUE(report_id, row_number)
 );'''
+
+'''
+CREATE TABLE teachers (
+    id SERIAL PRIMARY KEY,
+    full_name TEXT NOT NULL,
+    short_name TEXT,
+    employee_number TEXT UNIQUE
+);
+'''
+
+'''
+CREATE TABLE teacher_assigned (
+    id SERIAL PRIMARY KEY,
+    type TEXT,
+    teacher_id INTEGER NOT NULL REFERENCES teachers(id) ON DELETE CASCADE,
+    group_id INTEGER NOT NULL REFERENCES groups(id) ON DELETE CASCADE,
+    subject_id INTEGER NOT NULL REFERENCES subjects(id) ON DELETE CASCADE,
+    UNIQUE (type, teacher_id, group_id, subject_id)
+);
+'''
 
 import psycopg2
 from psycopg2 import sql

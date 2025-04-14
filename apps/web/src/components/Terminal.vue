@@ -14,49 +14,52 @@ export default {
 
   methods: {
     executeCommand() {
-      if (!this.command.trim()) return;
+		if (!this.command.trim()) return;
 
-      const prompt = this.sqlMode ? 'SQL >' : '$';
-      this.output.push(`${prompt} ${this.command}`);
+		const prompt = this.sqlMode ? 'SQL >' : '$';
+		this.output.push(`${prompt} ${this.command}`);
 
-      const result = this.processCommand(this.command);
-      if (result !== undefined) this.output.push(result);
+		const result = this.processCommand(this.command);
+		if (result !== undefined) this.output.push(result);
 
-      this.command = '';
-      this.$nextTick(() => {
-        this.$refs.output.scrollTop = this.$refs.output.scrollHeight;
-      });
+		this.command = '';
+		this.$nextTick(() => {
+			this.$refs.output.scrollTop = this.$refs.output.scrollHeight;
+		});
     },
 
     processCommand(command) {
-      if (this.sqlMode) return this.validateSql(command);
-      
-      switch (command.trim().toLowerCase()) {
-        case 'help': return 'Доступные команды: help, clear, sql';
-        case 'clear': this.output = []; return '';
-        case 'sql': 
-          this.sqlMode = true;
-          return 'Режим SQL. Используйте "exit" для выхода';
-        default: return `Команда не распознана: "${command}"`;
-      }
+		if (this.sqlMode) return this.validateSql(command);
+		
+		switch (command.trim().toLowerCase()) {
+			case 'help': 
+				return 'Доступные команды: help, clear, sql';
+			case 'clear': 
+				this.output = []; 
+				return '';
+			case 'sql': 
+				this.sqlMode = true;
+				return 'Режим SQL. Используйте "exit" для выхода';
+			default: 
+				return `Команда не распознана: "${command}"`;
+		}
     },
 
     validateSql(sqlCmd) {
-      if (sqlCmd.trim().toLowerCase() === 'exit') {
-        this.sqlMode = false;
-        return 'Выход из режима SQL';
-      } else if (sqlCmd.trim().toLowerCase() === 'clear') {
-          this.output = []; return '';
-        }
+		if (sqlCmd.trim().toLowerCase() === 'exit') {
+			this.sqlMode = false;
+			return 'Выход из режима SQL';
+		} else if (sqlCmd.trim().toLowerCase() === 'clear') {
+			this.output = []; return '';
+			}
 
-      try {
-        const ast = parse(sqlCmd);
-        console.log(sqlCmd)
-        return 'Запрос корректен';
-      } catch (e) {
-        return `Ошибка: ${this.formatSqlError(e.message)}`;
-      }
-    },
+		try {
+			parse(sqlCmd);
+			return 'Запрос корректен';
+		} catch (e) {
+			return `Ошибка: ${this.formatSqlError(e.message)}`;
+		}
+	},
 
     formatSqlError(msg) {
       return msg
@@ -106,7 +109,7 @@ export default {
   flex: 1;
   overflow-y: auto;
   margin-bottom: 10px;
-  white-space: pre-wrap; /* Сохраняет форматирование многострочного вывода */
+  white-space: pre-wrap;
 }
 
 .input {
