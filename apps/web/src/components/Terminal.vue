@@ -55,6 +55,7 @@ export default {
 
 		try {
 			parse(sqlCmd);
+      console.log(sqlCmd);
 			return 'Запрос корректен';
 		} catch (e) {
 			return `Ошибка: ${this.formatSqlError(e.message)}`;
