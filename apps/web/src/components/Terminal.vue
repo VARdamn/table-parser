@@ -1,5 +1,6 @@
 <script>
 import { parse } from 'pgsql-ast-parser';
+import { executeSql } from '@/shared/api.js';
 
 export default {
   name: 'Terminal',
@@ -13,60 +14,85 @@ export default {
   },
 
   methods: {
-    executeCommand() {
-		if (!this.command.trim()) return;
+    async executeCommand() {
+      if (!this.command.trim()) return;
 
-		const prompt = this.sqlMode ? 'SQL >' : '$';
-		this.output.push(`${prompt} ${this.command}`);
+      const prompt = this.sqlMode ? 'SQL >' : '$';
+      this.output.push(`${prompt} ${this.command}`);
 
-		const result = this.processCommand(this.command);
-		if (result !== undefined) this.output.push(result);
+      const result = await this.processCommand(this.command);
+      if (result !== undefined) {
+        if (Array.isArray(result)) {
+          result.forEach(line => this.output.push(line));
+        } else {
+          this.output.push(result);
+        }
+      }
 
-		this.command = '';
-		this.$nextTick(() => {
-			this.$refs.output.scrollTop = this.$refs.output.scrollHeight;
-		});
+      this.command = '';
+      this.$nextTick(() => {
+        this.$refs.output.scrollTop = this.$refs.output.scrollHeight;
+      });
     },
 
-    processCommand(command) {
-		if (this.sqlMode) return this.validateSql(command);
-		
-		switch (command.trim().toLowerCase()) {
-			case 'help': 
-				return 'Доступные команды: help, clear, sql';
-			case 'clear': 
-				this.output = []; 
-				return '';
-			case 'sql': 
-				this.sqlMode = true;
-				return 'Режим SQL. Используйте "exit" для выхода';
-			default: 
-				return `Команда не распознана: "${command}"`;
-		}
+    async processCommand(command) {
+      if (this.sqlMode) return await this.handleSqlCommand(command);
+      
+      switch (command.trim().toLowerCase()) {
+        case 'help': 
+          return 'Доступные команды: help, clear, sql';
+        case 'clear': 
+          this.output = []; 
+          return '';
+        case 'sql': 
+          this.sqlMode = true;
+          return 'Режим SQL. Используйте "exit" для выхода';
+        default: 
+          return `Команда не распознана: "${command}"`;
+      }
     },
 
-    validateSql(sqlCmd) {
-		if (sqlCmd.trim().toLowerCase() === 'exit') {
-			this.sqlMode = false;
-			return 'Выход из режима SQL';
-		} else if (sqlCmd.trim().toLowerCase() === 'clear') {
-			this.output = []; return '';
-			}
+    async handleSqlCommand(sqlCmd) {
+      if (sqlCmd.trim().toLowerCase() === 'exit') {
+        this.sqlMode = false;
+        return 'Выход из режима SQL';
+      } else if (sqlCmd.trim().toLowerCase() === 'clear') {
+        this.output = []; 
+        return '';
+      }
 
-		try {
-			parse(sqlCmd);
-      console.log(sqlCmd);
-			return 'Запрос корректен';
-		} catch (e) {
-			return `Ошибка: ${this.formatSqlError(e.message)}`;
-		}
-	},
+      try {
+        parse(sqlCmd);
+      } catch (e) {
+        return `Ошибка синтаксиса: ${this.formatSqlError(e.message)}`;
+      }
+
+      try {
+        const response = executeSql(sqlCmd);
+        // добавить обработку ответа
+        
+      } catch (error) {
+        console.error('Ошибка при выполнении запроса:', error);
+        return `Ошибка соединения: ${error.message}`;
+      }
+    },
 
     formatSqlError(msg) {
       return msg
         .replace(/^error: /i, '')
         .replace(/at position \d+/, '')
         .replace(/line \d+:\d+/, '');
+    },
+
+    formatTableOutput(data) {
+      if (!Array.isArray(data) || data.length === 0) return ['Нет данных'];
+      
+      const keys = Object.keys(data[0]);
+      const header = keys.join('\t');
+      const separator = '-'.repeat(header.length);
+      const rows = data.map(row => Object.values(row).join('\t'));
+
+      return [header, separator, ...rows];
     }
   }
 };

@@ -41,3 +41,18 @@ export const addUser = createRequest('/users', {
 		email: 'ok@pfur.sru'
 	}
 })
+
+export const executeSql = (cmd) => createRequest ('/execute', {
+	method: 'POST',
+	body: {
+		cmd: cmd
+	}
+})
+
+export const upload = (formData) => createRequest('/upload', {
+	method: 'POST',
+	body: formData,
+	headers: {
+		
+	}
+  });

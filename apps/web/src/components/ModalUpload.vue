@@ -1,5 +1,7 @@
 <script>
     import Modal from './ModalWindow.vue';
+    import { upload } from '@/shared/api.js'
+    
     export default {
         components: { Modal },
         props: {
@@ -39,13 +41,20 @@
                 return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
             },
 
-            handleUpload() {
-                
-                // Логика загрузки файла
+            async handleUpload() {
+                if (!this.file) return;
+                try {
+                    const formData = new FormData();
+                    formData.append('file', this.file);
+                    console.log('Загружаем файл:', this.file);
+                    this.file = null;
+                    const response = upload(formData);
+                    console.log(response);
+                    // обработка успешной загрузки
 
-                console.log('Загружаем файл:', this.file);
-                this.file = null;
-                this.isModalOpen = false;
+                } catch (error) {
+                    // обработка ошибок
+                }
             }
         }
     };
