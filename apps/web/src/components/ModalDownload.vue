@@ -1,5 +1,6 @@
 <script>
   import Modal from './ModalWindow.vue';
+     import { useToast } from 'vue-toastification';
   
   export default {
     components: { Modal },
@@ -30,10 +31,12 @@
       },
 
       handleDownload() {
+        const toast = useToast()
         console.log('Скачиваем: '+ this.selectedTable.name);
 
         // логика скачивания
 
+        toast.success('Файл успешно сохранен!')
         this.selectedTable = null;
         this.close();
       }

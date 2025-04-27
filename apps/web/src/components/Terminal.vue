@@ -1,6 +1,7 @@
 <script>
 import { parse } from 'pgsql-ast-parser';
 import { executeSql } from '@/shared/api.js';
+import { useToast } from 'vue-toastification';
 
 export default {
   name: 'Terminal',
@@ -46,6 +47,7 @@ export default {
           return '';
         case 'sql': 
           this.sqlMode = true;
+          useToast().info('Режим SQL')
           return 'Режим SQL. Используйте "exit" для выхода';
         default: 
           return `Команда не распознана: "${command}"`;
@@ -55,6 +57,7 @@ export default {
     async handleSqlCommand(sqlCmd) {
       if (sqlCmd.trim().toLowerCase() === 'exit') {
         this.sqlMode = false;
+        useToast().info('Выход из режима SQL')
         return 'Выход из режима SQL';
       } else if (sqlCmd.trim().toLowerCase() === 'clear') {
         this.output = []; 
@@ -68,7 +71,7 @@ export default {
       }
 
       try {
-        const response = executeSql(sqlCmd);
+        const response = await executeSql(sqlCmd);
         // добавить обработку ответа
         
       } catch (error) {

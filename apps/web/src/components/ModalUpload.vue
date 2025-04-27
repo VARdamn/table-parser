@@ -1,6 +1,7 @@
 <script>
     import Modal from './ModalWindow.vue';
-    import { upload } from '@/shared/api.js'
+    import { upload } from '@/shared/api.js';
+    import { useToast } from 'vue-toastification';
     
     export default {
         components: { Modal },
@@ -28,7 +29,6 @@
 
             removeFile() {
                 this.file = null;
-                // Очищаем значение input, чтобы можно было выбрать тот же файл снова
                 const input = this.$el.querySelector('input[type="file"]');
                 if (input) input.value = '';
             },
@@ -42,18 +42,25 @@
             },
 
             async handleUpload() {
-                if (!this.file) return;
+                const toast = useToast();
+                if (!this.file) {
+                    toast.warning('Файл не выбран!');
+                    return;
+                } 
+                
                 try {
                     const formData = new FormData();
                     formData.append('file', this.file);
+                    const response = await upload(formData);
+                    toast.success('Файл успешно загружен!')
                     console.log('Загружаем файл:', this.file);
                     this.file = null;
-                    const response = await upload(formData);
                     console.log(response);
                     // обработка успешной загрузки
 
                 } catch (error) {
                     // обработка ошибок
+                    toast.error('Ошибка загрузки: ' + error.message)
                 }
             }
         }

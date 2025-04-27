@@ -15,5 +15,8 @@
 	},
 	"workspaces": [
 		"apps/*"
-	]
+	],
+	"dependencies": {
+		"vue-toastification": "^2.0.0-rc.5"
+	}
 }
