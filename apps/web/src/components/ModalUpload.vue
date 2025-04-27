@@ -48,7 +48,7 @@
                     formData.append('file', this.file);
                     console.log('Загружаем файл:', this.file);
                     this.file = null;
-                    const response = upload(formData);
+                    const response = await upload(formData);
                     console.log(response);
                     // обработка успешной загрузки
 

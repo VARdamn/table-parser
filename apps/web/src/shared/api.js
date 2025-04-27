@@ -25,34 +25,12 @@ const createRequest = (endpoint, options = {}) => {
 	}
 };
 
-
-export const getUsers = createRequest('/users', {
-	method: 'GET',
-	params: {
-		gavno: true,
-	}
-})
-
-export const addUser = createRequest('/users', {
+export const executeSql = (query) => createRequest ('/sql/execute', {
 	method: 'POST',
-	body: {
-		name: 'debil',
-		surname: 'eblan',
-		email: 'ok@pfur.sru'
-	}
+	body: { query }
 })
 
-export const executeSql = (cmd) => createRequest ('/execute', {
-	method: 'POST',
-	body: {
-		cmd: cmd
-	}
-})
-
-export const upload = (formData) => createRequest('/upload', {
+export const upload = (formData) => createRequest('/files/upload', {
 	method: 'POST',
 	body: formData,
-	headers: {
-		
-	}
-  });
+});
