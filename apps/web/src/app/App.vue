@@ -1,9 +1,9 @@
 <script>
-  import Header from './components/Header.vue';
-  import Footer from './components/Footer.vue';
-  import Terminal from './components/Terminal.vue';
-  import ModalUpload from './components/ModalUpload.vue';
-  import ModalDownload from './components/ModalDownload.vue';
+  import Header from '@/components/Header.vue';
+  import Footer from '@/components/Footer.vue';
+  import Terminal from '@/components/Terminal.vue';
+  import ModalUpload from '@/components/ModalUpload.vue';
+  import ModalDownload from '@/components/ModalDownload.vue';
 
   export default {
     components: { Header, Footer, Terminal, ModalUpload, ModalDownload },
@@ -58,13 +58,13 @@
     display: flex;
     flex-direction: column;
     flex-shrink: 0;
-    min-height: 100vh; /* Минимальная высота = весь экран */
+    min-height: 100vh; 
     margin: 0;
     padding: 0;
   }
 
   .main-content {
-    flex: 1; /* Занимает всё доступное пространство между Header и Footer */
+    flex: 1;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -76,7 +76,7 @@
   .container {
     display: flex;
     width: 100%;
-    max-width: 1200px; /* Ограничиваем ширину контейнера */
+    max-width: 1200px; 
     gap: 20px;
   }
 

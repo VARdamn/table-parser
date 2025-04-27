@@ -29,26 +29,26 @@ button {
     transition: border-color 0.25s;
     margin-right: 5px;
     color: #ffffff;
-  }
+}
 
-  button:hover {
-    border-color: rgba(15, 15, 15, 0.87);
-    color: rgba(15, 15, 15, 0.87);
-  }
+button:hover {
+	border-color: rgba(15, 15, 15, 0.87);
+	color: rgba(15, 15, 15, 0.87);
+}
 
-  button:focus, button:focus-visible {
-    outline: 4px auto;
-  }
- 
-  .save {
-    background-color: #00a94f;
-  }
+button:focus, button:focus-visible {
+	outline: 4px auto;
+}
 
-  .save:disabled, .saved:disabled:hover {
-    background-color: #cccccc;
-    cursor: not-allowed;
-  }
+.save {
+	background-color: #00a94f;
+}
 
-  .cancel {
-    background-color: #bdbdbd;
-  }
+.save:disabled, .saved:disabled:hover {
+	background-color: #cccccc;
+cursor: not-allowed;
+}
+
+.cancel {
+	background-color: #bdbdbd;
+}
