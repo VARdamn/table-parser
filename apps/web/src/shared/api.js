@@ -15,7 +15,7 @@ const createRequest = (endpoint, options = {}) => {
 				...defaultHeaders,
 				...options.headers,
 			},
-			...options,
+			body: options.body ? JSON.stringify(options.body) : undefined,
 		})
 		.then((response) => response.json())
 		.catch((error) => {
@@ -25,10 +25,10 @@ const createRequest = (endpoint, options = {}) => {
 	}
 };
 
-export const executeSql = (query) => createRequest ('/sql/execute', {
+export const executeSql = async (query) => await createRequest('/sql/execute', {
 	method: 'POST',
 	body: { query }
-})
+})()
 
 export const upload = (formData) => createRequest('/files/upload', {
 	method: 'POST',

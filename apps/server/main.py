@@ -1,5 +1,8 @@
-from fastapi import FastAPI, APIRouter
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from routes import all_routers
+from app.db.session import engine, Base
+import app.db.models
 
 app = FastAPI()
 
@@ -13,23 +16,15 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-router = APIRouter(prefix='/api')
-
 @app.get("/ping")
-def read_root():
+def ping():
     return "pong"
 
-@app.get("/teachers/load")
-def read_root():
-    return "pong"
+for router in all_routers:
+    app.include_router(router, prefix="/api")
 
-@router.post("/users")
-def read_root(data):
-    print(data)
-    return "pong"
 
-app.include_router(router)
-
-commands = {
-    'load_users'
-}
+@app.on_event("startup")
+def on_startup():
+    Base.metadata.create_all(bind=engine)
+    

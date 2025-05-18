@@ -2,7 +2,7 @@ FROM python:3.12
 
 ENV PYTHONUNBUFFERED=1
 
-WORKDIR /app/
+WORKDIR /app
 
 COPY --from=ghcr.io/astral-sh/uv:0.5.11 /uv /uvx /bin/
 
@@ -19,11 +19,9 @@ RUN --mount=type=cache,target=/root/.cache/uv \
 
 ENV PYTHONPATH=/app
 
-COPY ./pyproject.toml ./uv.lock /app/
-
-COPY ./app /app/app
+COPY . /app/
 
 RUN --mount=type=cache,target=/root/.cache/uv \
     uv sync
 
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]

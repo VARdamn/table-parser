@@ -10,4 +10,8 @@ dependencies = [
     "uvicorn[standard]",
     "python-dotenv",
     "asyncpg",
+	"sqlalchemy",
+	"pydantic",
+	"pydantic_settings",
+	"psycopg2"
 ]

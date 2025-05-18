@@ -72,8 +72,7 @@ export default {
 
       try {
         const response = await executeSql(sqlCmd);
-        // добавить обработку ответа
-        
+		return response
       } catch (error) {
         console.error('Ошибка при выполнении запроса:', error);
         return `Ошибка соединения: ${error.message}`;
