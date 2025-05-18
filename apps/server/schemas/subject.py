@@ -2,20 +2,13 @@ from pydantic import BaseModel
 
 
 class SubjectBase(BaseModel):
-    name: str
-    code: str | None = None
+    
+	id: int
 
-
-class SubjectCreate(SubjectBase):
-    pass
-
-
-class SubjectUpdate(SubjectBase):
-    pass
-
-
-class SubjectRead(SubjectBase):
-    id: int
-
-    class Config:
-        orm_mode = True
+	name: str
+    
+	code: str | None = None
+	
+	model_config = {
+		"from_attributes": True
+	}

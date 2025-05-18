@@ -7,9 +7,6 @@ DATABASE_URL = (
     f"@{config.POSTGRES_SERVER}:{config.POSTGRES_PORT}/{config.POSTGRES_DB}"
 )
 
-print("DATABSE URL")
-print(DATABASE_URL)
-
 engine = create_engine(DATABASE_URL, future=True, echo=False)
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine, future=True)

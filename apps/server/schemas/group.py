@@ -3,22 +3,17 @@ from datetime import datetime
 
 
 class GroupBase(BaseModel):
-    group_name: str
-    group_code: str
-    specialization_id: int | None = None
 
+	id: int
 
-class GroupCreate(GroupBase):
-    pass
+	created_at: datetime
 
+	group_name: str
 
-class GroupUpdate(GroupBase):
-    pass
+	group_code: str
 
-
-class GroupRead(GroupBase):
-    id: int
-    created_at: datetime
-
-    class Config:
-        orm_mode = True
+	specialization_id: int | None = None
+	
+	model_config = {
+		"from_attributes": True
+	}

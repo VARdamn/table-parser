@@ -3,20 +3,22 @@ from datetime import datetime
 
 
 class ReportEntryBase(BaseModel):
-    report_id: int
-    row_number: int
-    group_id: int | None = None
-    specialization_id: int | None = None
-    subject_id: int | None = None
 
+	id: int
 
-class ReportEntryCreate(ReportEntryBase):
-    pass
+	created_at: datetime
 
+	report_id: int
 
-class ReportEntryRead(ReportEntryBase):
-    id: int
-    created_at: datetime
+	row_number: int
 
-    class Config:
-        orm_mode = True
+	group_id: int | None = None
+
+	specialization_id: int | None = None
+
+	subject_id: int | None = None
+	
+	model_config = {
+		"from_attributes": True
+	}
+	

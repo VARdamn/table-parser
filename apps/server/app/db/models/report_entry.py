@@ -7,6 +7,8 @@ class ReportEntry(Base):
 
     id = Column(Integer, primary_key=True)
 
+    created_at = Column(TIMESTAMP, server_default=func.now())
+
     report_id = Column(Integer, ForeignKey("reports.id", ondelete="CASCADE"), nullable=False)
 
     row_number = Column(Integer, nullable=False)
@@ -16,5 +18,3 @@ class ReportEntry(Base):
     specialization_id = Column(Integer, ForeignKey("specializations.id"))
 
     subject_id = Column(Integer, ForeignKey("subjects.id"))
-
-    created_at = Column(TIMESTAMP, server_default=func.now())

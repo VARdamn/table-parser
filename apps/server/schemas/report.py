@@ -3,19 +3,16 @@ from datetime import datetime
 
 
 class ReportBase(BaseModel):
-    created_by: str | None = None
-    filename: str | None = None
-    file_hash: str
+	id: int
 
+	created_at: datetime
 
-class ReportCreate(ReportBase):
-    pass
+	created_by: str | None = None
 
+	filename: str | None = None
 
-class ReportRead(ReportBase):
-    id: int
-    created_at: datetime
+	file_hash: str
 
-    class Config:
-        orm_mode = True
-
+	model_config = {
+		"from_attributes": True
+	}

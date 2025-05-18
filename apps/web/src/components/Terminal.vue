@@ -1,6 +1,6 @@
 <script>
 import { parse } from 'pgsql-ast-parser';
-import { executeSql } from '@/shared/api.js';
+import { $$api } from '@/shared/api.js';
 import { useToast } from 'vue-toastification';
 
 export default {
@@ -71,7 +71,7 @@ export default {
       }
 
       try {
-        const response = await executeSql(sqlCmd);
+        const response = await $$api.executeSql(sqlCmd);
 		return response
       } catch (error) {
         console.error('Ошибка при выполнении запроса:', error);

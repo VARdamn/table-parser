@@ -2,18 +2,17 @@ from pydantic import BaseModel
 
 
 class TeacherAssignedBase(BaseModel):
-    type: str
-    teacher_id: int
-    group_id: int
-    subject_id: int
 
+	id: int
+	
+	type: str
 
-class TeacherAssignedCreate(TeacherAssignedBase):
-    pass
+	teacher_id: int
 
+	group_id: int
 
-class TeacherAssignedRead(TeacherAssignedBase):
-    id: int
+	subject_id: int
 
-    class Config:
-        orm_mode = True
+	model_config = {
+		"from_attributes": True
+	}

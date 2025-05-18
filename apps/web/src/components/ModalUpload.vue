@@ -1,6 +1,6 @@
 <script>
     import Modal from './ModalWindow.vue';
-    import { upload } from '@/shared/api.js';
+    import { $$api } from '@/shared/api.js';
     import { useToast } from 'vue-toastification';
     
     export default {
@@ -51,7 +51,7 @@
                 try {
                     const formData = new FormData();
                     formData.append('file', this.file);
-                    const response = await upload(formData);
+                    const response = await $$api.upload(formData);
                     toast.success('Файл успешно загружен!')
                     console.log('Загружаем файл:', this.file);
                     this.file = null;

@@ -25,12 +25,39 @@ const createRequest = (endpoint, options = {}) => {
 	}
 };
 
-export const executeSql = async (query) => await createRequest('/sql/execute', {
+const executeSql = async (query) => await createRequest('/sql/execute', {
 	method: 'POST',
 	body: { query }
 })()
 
-export const upload = (formData) => createRequest('/files/upload', {
+const uploadFile = (formData) => createRequest('/files/upload', {
 	method: 'POST',
 	body: formData,
 });
+
+const getSpecializations = async () => await createRequest('/specializations', {
+	method: 'GET',
+})()
+
+const getGroups = async () => await createRequest('/groups', {
+	method: 'GET',
+})()
+
+const getSubjects = async () => await createRequest('/subjects', {
+	method: 'GET',
+})()
+
+const getTeachers = async () => await createRequest('/teachers', {
+	method: 'GET',
+})()
+
+
+export const $$api = {
+	getSpecializations,
+	getGroups,
+	getSubjects,
+	getTeachers,
+	
+	executeSql,
+	uploadFile
+}

@@ -1,47 +1,92 @@
 <script>
-  import Modal from './ModalWindow.vue';
-     import { useToast } from 'vue-toastification';
-  
-  export default {
-    components: { Modal },
-    props: {
-      isOpen: {
-        type: Boolean,
-        required: true
-      }
-    },
+  	import Modal from './ModalWindow.vue';
+    import { useToast } from 'vue-toastification';
+	import { $$api } from '@/shared/api';
+	
+	export default {
+		components: { Modal },
+		props: {
+			isOpen: {
+				type: Boolean,
+				required: true
+			}
+		},
 
-    data() {
-        return {
-            selectedTable: null,
-            availableTables: [
-                // дописать получение таблиц из БД
-                
-                // для примера:
-                { id: 1, name: 'Преподаватели', rows: 245, created_at: '2023-10-15' },
-                { id: 2, name: 'Группы', rows: 1892, created_at: '2023-11-22' },
-                { id: 3, name: 'Предметы', rows: 543, created_at: '2023-09-05' }
-            ]
-        }
-    },
+		data() {
+			return {
+				selectedTableId: '',
+				selectedTable: null,
+				availableTables: [
+					{ id: 'teachers', name: 'Преподаватели' },
+					{ id: 'groups', name: 'Группы' },
+					{ id: 'subjects', name: 'Предметы' },
+					{ id: 'specializations', name: 'Направления' }
+				]
+			}
+		},
+		
+		watch: {
+			selectedTableId(newId) {
+				if (newId) {
+					this.fetchTableData(newId);
+				} else {
+					this.selectedTable = null;
+				}
+			}
+		},
+		
+		methods: {
+			close() {
+				this.$emit('close');
+			},
 
-    methods: {
-      close() {
-        this.$emit('close');
-      },
+			async fetchTableData(tableId) {
+				const toast = useToast();
+				try {
+					let data;
+					switch (tableId) {
+					case 'teachers':
+						data = await $$api.getTeachers();
+						break;
+					case 'groups':
+						data = await $$api.getGroups();
+						break;
+					case 'subjects':
+						data = await $$api.getSubjects();
+						break;
+					case 'specializations':
+						data = await $$api.getSpecializations();
+						break;
+					default:
+						data = [];
+					}
 
-      handleDownload() {
-        const toast = useToast()
-        console.log('Скачиваем: '+ this.selectedTable.name);
+					const tableInfo = this.availableTables.find(t => t.id === tableId);
 
-        // логика скачивания
+					this.selectedTable = {
+						...tableInfo,
+						rows: data.length,
+						created_at: data[0]?.created_at
+					};
+				} catch (error) {
+					console.log(error);
+					toast.error('Ошибка загрузки данных таблицы');
+					this.selectedTable = null;
+				}
+			},
 
-        toast.success('Файл успешно сохранен!')
-        this.selectedTable = null;
-        this.close();
-      }
-    }
-  };
+			handleDownload() {
+				const toast = useToast()
+				console.log('Скачиваем: '+ this.selectedTable.name);
+
+				// логика скачивания
+
+				toast.success('Файл успешно сохранен!')
+				this.selectedTable = null;
+				this.close();
+			}
+		}
+	};
 </script>
 
 <template>
@@ -53,20 +98,21 @@
       <div class="file-download-content">
             <div class="select-wrapper">
                 <h4 class="file-download-text">Выберите таблицу для скачивания:</h4>
-                <select 
-                    id="table-select"
-                    v-model="selectedTable"
-                    class="table-select"
-                >
-                    <option disabled value="">Выберите из списка</option>
-                    <option 
-                    v-for="table in availableTables" 
-                    :key="table.id"
-                    :value="table"
-                    >
-                    {{ table.name }}
-                    </option>
-                </select>
+				<select 
+					id="table-select"
+					v-model="selectedTableId"
+					class="table-select"
+				>
+					<option disabled value="">Выберите из списка</option>
+					<option 
+						v-for="table in availableTables" 
+						:key="table.id"
+						:value="table.id"
+					>
+						{{ table.name }}
+					</option>
+				</select>
+
             </div>
 
             <div v-if="selectedTable" class="table-info">
@@ -78,10 +124,10 @@
                     <span class="info-label">Количество строк:</span>
                     <span>{{ selectedTable.rows }}</span>
                 </div>
-                <div class="info-row">
-                    <span class="info-label">Дата создания:</span>
-                    <span>{{ selectedTable.created_at }}</span>
-                </div>
+				<div class="info-row" v-if="selectedTable.created_at">
+					<span class="info-label">Дата создания:</span>
+					<span>{{ selectedTable.created_at }}</span>
+				</div>
             </div>
         </div>
   

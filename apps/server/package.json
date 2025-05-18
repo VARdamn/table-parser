@@ -4,7 +4,6 @@
 	"version": "0.0.0",
 	"type": "module",
 	"scripts": {
-		"dev": "uvicorn main:app --port 8000"
+		"dev": "uv run fastapi dev"
 	}
 }
-  
