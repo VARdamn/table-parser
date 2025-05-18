@@ -13,5 +13,6 @@ dependencies = [
 	"sqlalchemy",
 	"pydantic",
 	"pydantic_settings",
-	"psycopg2"
+	"psycopg2",
+    "colorama"
 ]
