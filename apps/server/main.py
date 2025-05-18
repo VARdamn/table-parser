@@ -2,9 +2,10 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from routes import all_routers
 from app.db.session import engine, Base
+from app.db.seeds import run_all_seeds
 import app.db.models
 
-app = FastAPI()
+app = FastAPI(on_startup=[run_all_seeds])
 
 origins = ["http://localhost:5173"]
 
