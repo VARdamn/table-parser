@@ -29,3 +29,5 @@ __pycache__
 
 .turbo
 .env
+
+./apps/server/package.json
