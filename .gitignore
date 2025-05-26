@@ -30,4 +30,4 @@ __pycache__
 .turbo
 .env
 
-./apps/server/package.json
+apps/server/package.json
